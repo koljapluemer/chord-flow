@@ -1,8 +1,5 @@
 <script setup>
-// import words from "./words.js";
-import sentences from "./new_sentences.js";
 import { ref, computed } from "vue";
-import * as ebisu from "ebisu-js";
 
 const lessons = [
   ["C", "G", "Am", "F"],
@@ -54,23 +51,33 @@ function getRandomLesson() {
   currentLessonIndex.value =
     lessons[Math.floor(Math.random() * lessons.length)];
   generatedExercisesInLesson.value = [];
-  for (let i = 0; i < currentLessonIndex.value.length; i++) {
-    const chord = currentLessonIndex.value[i];
-    const nextChord =
-      currentLessonIndex.value[(i + 1) % currentLessonIndex.value.length];
-    const nextNextChord =
-      currentLessonIndex.value[(i + 2) % currentLessonIndex.value.length];
-    const nextNextNextChord =
-      currentLessonIndex.value[(i + 3) % currentLessonIndex.value.length];
-    generatedExercisesInLesson.value.push([chord, nextChord]);
-    generatedExercisesInLesson.value.push([chord, nextChord, nextNextChord]);
-    generatedExercisesInLesson.value.push([
-      chord,
-      nextChord,
-      nextNextChord,
-      nextNextNextChord,
-    ]);
-  }
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[0], currentLessonIndex.value[1]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[1], currentLessonIndex.value[2]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[2], currentLessonIndex.value[3]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[3], currentLessonIndex.value[0]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[0], currentLessonIndex.value[1], currentLessonIndex.value[2]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[1], currentLessonIndex.value[2], currentLessonIndex.value[3]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[2], currentLessonIndex.value[3], currentLessonIndex.value[0]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[3], currentLessonIndex.value[0], currentLessonIndex.value[1]],
+  );
+  generatedExercisesInLesson.value.push(
+     [currentLessonIndex.value[0], currentLessonIndex.value[1], currentLessonIndex.value[2], currentLessonIndex.value[3]],
+  );
   console.log(generatedExercisesInLesson.value);
   currentExerciseIndex.value = 0;
 }
@@ -90,27 +97,25 @@ const exercise = computed(() => {
   return generatedExercisesInLesson.value[currentExerciseIndex.value];
 });
 
-
 // next exercise should picked every 10 seconds
 setInterval(() => {
   setNextExerciseInLesson();
 }, 10000);
-
 </script>
 
 <template>
-  <div
-    class="card bg-gray-600 shadow-xl m-4 flex flex-col items-center w-full max-w-screen-xl"
-  >
-    <div class="card-body">
-      <h2 class="card-title my-2 text-2xl">
-        <span class="m-2" v-for="chord in exercise">
-          {{ chord }}
-        </span>
-      </h2>
+  <main class="flex gap-2 mb-10">
+    <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
+      <div class="card-body text-gray-800">
+        <!-- dynamically load @assets/chords/{chord}.png -->
+        <img :src="`/chords/${chord}.png`" class="w-24" />
+      </div>
     </div>
-  </div>
-  <br />
+  </main>
+  <em
+    >don't forget the
+    <a href="https://www.metronomeonline.com/" class="underline" target="_blank"> metronome</a>
+  </em>
 </template>
 
 <style scoped></style>
