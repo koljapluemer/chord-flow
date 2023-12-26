@@ -33,7 +33,6 @@ const lessons = [
   ["A", "D", "C#m", "Bm"],
   ["F", "Bb", "Dm", "Gm"],
   ["B", "G#m", "E", "C#m"],
-  ["Eb", "Bb", "Fm", "Ab"],
   ["Am", "G", "F", "E"],
   ["D", "G", "Bm", "Em"],
   ["C", "Am", "G", "F"],
@@ -51,33 +50,48 @@ function getRandomLesson() {
   currentLessonIndex.value =
     lessons[Math.floor(Math.random() * lessons.length)];
   generatedExercisesInLesson.value = [];
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[0], currentLessonIndex.value[1]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[1], currentLessonIndex.value[2]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[2], currentLessonIndex.value[3]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[3], currentLessonIndex.value[0]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[0], currentLessonIndex.value[1], currentLessonIndex.value[2]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[1], currentLessonIndex.value[2], currentLessonIndex.value[3]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[2], currentLessonIndex.value[3], currentLessonIndex.value[0]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[3], currentLessonIndex.value[0], currentLessonIndex.value[1]],
-  );
-  generatedExercisesInLesson.value.push(
-     [currentLessonIndex.value[0], currentLessonIndex.value[1], currentLessonIndex.value[2], currentLessonIndex.value[3]],
-  );
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[0],
+    currentLessonIndex.value[1],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[1],
+    currentLessonIndex.value[2],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[2],
+    currentLessonIndex.value[3],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[3],
+    currentLessonIndex.value[0],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[0],
+    currentLessonIndex.value[1],
+    currentLessonIndex.value[2],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[1],
+    currentLessonIndex.value[2],
+    currentLessonIndex.value[3],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[2],
+    currentLessonIndex.value[3],
+    currentLessonIndex.value[0],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[3],
+    currentLessonIndex.value[0],
+    currentLessonIndex.value[1],
+  ]);
+  generatedExercisesInLesson.value.push([
+    currentLessonIndex.value[0],
+    currentLessonIndex.value[1],
+    currentLessonIndex.value[2],
+    currentLessonIndex.value[3],
+  ]);
   console.log(generatedExercisesInLesson.value);
   currentExerciseIndex.value = 0;
 }
@@ -87,9 +101,9 @@ getRandomLesson();
 function setNextExerciseInLesson() {
   if (currentExerciseIndex.value >= generatedExercisesInLesson.value.length) {
     getRandomLesson();
+  } else {
+    currentExerciseIndex.value++;
   }
-  currentExerciseIndex.value++;
-  return exercise;
 }
 
 // computed value for actual exercise
@@ -100,21 +114,27 @@ const exercise = computed(() => {
 // next exercise should picked every 10 seconds
 setInterval(() => {
   setNextExerciseInLesson();
-}, 10000);
+}, 30000);
 </script>
 
 <template>
   <main class="flex gap-2 mb-10">
     <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
       <div class="card-body text-gray-800">
-        <!-- dynamically load @assets/chords/{chord}.png -->
-        <img :src="`/chords/${chord}.png`" class="w-24" />
+        <img :src="`chords/${encodeURIComponent(chord)}.png`"
+        class="w-24" />
       </div>
     </div>
   </main>
   <em
     >don't forget the
-    <a href="https://www.metronomeonline.com/" class="underline" target="_blank"> metronome</a>
+    <a
+      href="https://www.metronomeonline.com/"
+      class="underline"
+      target="_blank"
+    >
+      metronome</a
+    >
   </em>
 </template>
 
