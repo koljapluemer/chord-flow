@@ -114,16 +114,44 @@ const exercise = computed(() => {
 setInterval(() => {
   setNextExerciseInLesson();
 }, 30000);
+
+const sessionStarted = ref(false);
+const timeStampOfSessionStart = ref(0);
+
+// check if sessions[] is in localStorage
+const sessions = ref([]);
+if (localStorage.getItem("sessions")) {
+  sessions.value = JSON.parse(localStorage.getItem("sessions"));
+}
+
+function startSession() {
+  sessionStarted.value = true;
+  timeStampOfSessionStart.value = Date.now();
+}
+
+function stopSession() {
+  sessionStarted.value = false;
+  sessions.value.push({
+    started: timeStampOfSessionStart.value,
+    ended: Date.now(),
+  });
+  timeStampOfSessionStart.value = 0;
+  localStorage.setItem("sessions", JSON.stringify(sessions.value));
+}
 </script>
 
 <template>
-  <main class="flex gap-2 mb-10">
+  <main class="flex gap-2 mb-10" v-if="sessionStarted">
     <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
       <div class="card-body text-gray-800">
         <img :src="`chords/${encodeURIComponent(chord.replace('#', 'HASH'))}.png`"
         class="w-24" />
       </div>
     </div>
+    <button class="btn" @click="stopSession">Stop</button>
+  </main>
+  <main v-else>
+  <button class="btn btn-primary" @click="startSession">Start</button>
   </main>
   <em
     >don't forget the
