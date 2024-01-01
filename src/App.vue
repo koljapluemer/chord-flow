@@ -32,7 +32,6 @@ const lessons = [
   ["G", "C", "D", "Bm"],
   ["A", "D", "C#m", "Bm"],
   ["F", "Bb", "Dm", "Gm"],
-  ["B", "G#m", "E", "C#m"],
   ["Am", "G", "F", "E"],
   ["D", "G", "Bm", "Em"],
   ["C", "Am", "G", "F"],
@@ -121,7 +120,7 @@ setInterval(() => {
   <main class="flex gap-2 mb-10">
     <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
       <div class="card-body text-gray-800">
-        <img :src="`chords/${encodeURIComponent(chord)}.png`"
+        <img :src="`chords/${encodeURIComponent(chord.replace('#', 'HASH'))}.png`"
         class="w-24" />
       </div>
     </div>
