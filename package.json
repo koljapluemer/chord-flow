@@ -11,8 +11,7 @@
     "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'"
   },
   "dependencies": {
-    "ebisu-js": "^2.1.1",
-    "vue": "^3.3.4"
+    "vue": "^3.4.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
