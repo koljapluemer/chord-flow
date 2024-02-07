@@ -65,6 +65,10 @@ function generateChordProgressionPractice() {
   if (exercise.value.length > 4) {
     exercise.value.shift();
   }
+  //   ensure at least 2 chords
+  if (exercise.value.length < 2) {
+    generateChordProgressionPractice();
+  }
 }
 
 generateChordProgressionPractice();
@@ -100,30 +104,54 @@ function stopSession() {
 </script>
 
 <template>
-  <main class="p-8">
-    <article class="flex gap-2" v-if="sessionStarted">
+  <main class="p-8 flex flex-col">
+    <article class="flex gap-2 flex-wrap" v-if="sessionStarted">
       <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
         <div class="card-body text-gray-800">
           <h3 class="card-title">{{ chord.name }}</h3>
-          <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
+          <uke-chord
+            :frets="chord.frets"
+            :key="chord.name"
+          ></uke-chord>
         </div>
       </div>
-      <button class="btn" @click="stopSession">Stop</button>
     </article>
     <article v-else>
-      <button class="btn btn-primary" @click="startSession">Start</button>
+      <h2 class="text-xl font-bold">Let's practice some uke chords.</h2>
+      <img src="./assets/uke.jpg" alt="uke" class="" />
+      <em class="mt-2">
+        don't forget the
+        <a
+          href="https://www.metronomeonline.com/"
+          class="underline"
+          target="_blank"
+        >
+          metronome</a
+        >.
+      </em>
     </article>
-    <em
-      >don't forget the
-      <a
-        href="https://www.metronomeonline.com/"
-        class="underline"
-        target="_blank"
-      >
-        metronome</a
-      >
-    </em>
   </main>
+
+  <button
+    v-if="!sessionStarted"
+    @click="startSession"
+    class="btn btn-primary fixed z-90 bottom-10 right-8 drop-shadow-xl hover:drop-shadow-2xl duration-300"
+  >
+    Start
+  </button>
+  <button
+    v-else
+    @click="stopSession"
+    class="btn btn-primary fixed z-90 bottom-10 right-8 drop-shadow-xl hover:drop-shadow-2xl duration-300"
+  >
+    Stop
+  </button>
 </template>
 
-<style scoped></style>
+<style >
+
+#ukeChordSvg {
+    width: 3vw;
+    height: 3vw;
+}
+</style>
