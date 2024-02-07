@@ -104,16 +104,11 @@ function stopSession() {
 </script>
 
 <template>
-  <main class="p-8 flex flex-col">
-    <article class="flex gap-2 flex-wrap" v-if="sessionStarted">
-      <div class="card bg-gray-100 shadow-xl m-4" v-for="chord in exercise">
-        <div class="card-body text-gray-800">
-          <h3 class="card-title">{{ chord.name }}</h3>
-          <uke-chord
-            :frets="chord.frets"
-            :key="chord.name"
-          ></uke-chord>
-        </div>
+  <main class="p-2 flex flex-col">
+    <article class="bg-gray-100 p-2 flex gap-2 flex-wrap" v-if="sessionStarted">
+      <div v-for="chord in exercise">
+        <h3 class="font-bold">{{ chord.name }}</h3>
+        <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
       </div>
     </article>
     <article v-else>
@@ -148,10 +143,9 @@ function stopSession() {
   </button>
 </template>
 
-<style >
-
+<style>
 #ukeChordSvg {
-    width: 3vw;
-    height: 3vw;
+  width: 3vw;
+  height: 3vw;
 }
 </style>
