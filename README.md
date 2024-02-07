@@ -1,1 +1,1 @@
-- chord images from [here](https://midnightmusic.com/2014/05/free-ukulele-chord-image-library/)
+- using [this chord renderer](https://github.com/pianosnake/uke-chord)
