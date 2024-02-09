@@ -1,0 +1,2 @@
+- could use `CSS grid` to fill the screen estate nicely with the four chords, especially on mobile
+- add a feedback option (and SR) that does not require touching the phone

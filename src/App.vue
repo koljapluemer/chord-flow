@@ -58,15 +58,15 @@ const commonChords = [
 const exercise = ref([]);
 
 function generateChordProgressionPractice() {
-  // add one random chord to the end, but keep only the last 4 chords
+  // add one random chord to the end, but keep only the last 3 chords
   exercise.value.push(
     commonChords[Math.floor(Math.random() * commonChords.length)]
   );
-  if (exercise.value.length > 4) {
+  if (exercise.value.length > 3) {
     exercise.value.shift();
   }
-  //   ensure at least 2 chords
-  if (exercise.value.length < 2) {
+  //   ensure 3 chords always
+  if (exercise.value.length < 3) {
     generateChordProgressionPractice();
   }
 }
@@ -76,7 +76,7 @@ generateChordProgressionPractice();
 // next exercise should picked every 10 seconds
 setInterval(() => {
   generateChordProgressionPractice();
-}, 15000);
+}, 115000);
 
 const sessionStarted = ref(false);
 const timeStampOfSessionStart = ref(0);
@@ -106,8 +106,16 @@ function stopSession() {
 <template>
   <main class="p-2 flex flex-col">
     <article class="bg-gray-100 p-2 flex gap-2 flex-wrap" v-if="sessionStarted">
-      <div v-for="chord in exercise">
-        <h3 class="font-bold">{{ chord.name }}</h3>
+      <!-- if third chord, add opacity-45 -->
+      <div
+        v-for="(chord, index) in exercise"
+        :key="index"
+        :class="index === 2 ? 'opacity-20' : ''"
+      >
+        <h3 class="font-bold">
+        <span v-if="index === 2" class="text-italic text-sm">next:</span>
+        {{ chord.name }}
+        </h3>
         <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
       </div>
     </article>
@@ -145,7 +153,6 @@ function stopSession() {
 
 <style>
 #ukeChordSvg {
-  width: 3vw;
-  height: 3vw;
+  width: 5vw;
 }
 </style>
