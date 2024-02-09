@@ -73,10 +73,10 @@ function generateChordProgressionPractice() {
 
 generateChordProgressionPractice();
 
-// next exercise should picked every 10 seconds
+// next exercise should picked every 20 seconds
 setInterval(() => {
   generateChordProgressionPractice();
-}, 115000);
+}, 20000);
 
 const sessionStarted = ref(false);
 const timeStampOfSessionStart = ref(0);
