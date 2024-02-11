@@ -59,8 +59,12 @@ const exercise = ref([]);
 
 function generateChordProgressionPractice() {
   // add one random chord to the end, but keep only the last 3 chords
+  // exclude chords already in the exercise
+
   exercise.value.push(
-    commonChords[Math.floor(Math.random() * commonChords.length)]
+    commonChords.filter((chord) => !exercise.value.includes(chord))[
+      Math.floor(Math.random() * commonChords.length)
+    ]
   );
   if (exercise.value.length > 3) {
     exercise.value.shift();
@@ -121,7 +125,7 @@ function stopSession() {
     </article>
     <article v-else>
       <h2 class="text-xl font-bold">Let's practice some uke chords.</h2>
-      <img src="./assets/uke.jpg" alt="uke" class="" />
+      <img src="./assets/uke.jpg" alt="uke" class="w-52 rounded-full m-8 m-auto" />
       <em class="mt-2">
         don't forget the
         <a
