@@ -59,13 +59,13 @@ const exercise = ref([]);
 
 function generateChordProgressionPractice() {
   // add one random chord to the end, but keep only the last 3 chords
-  // exclude chords already in the exercise
-
-  exercise.value.push(
-    commonChords.filter((chord) => !exercise.value.includes(chord))[
-      Math.floor(Math.random() * commonChords.length)
-    ]
-  );
+  // exclude chords already in the exercise, check by frets
+  const randomChord = commonChords.filter(
+    (chord) => !exercise.value.some((c) => c.frets === chord.frets)
+  )[Math.floor(Math.random() * commonChords.length)];
+  console.log('adding chord', randomChord);
+  exercise.value.push(randomChord);
+  
   if (exercise.value.length > 3) {
     exercise.value.shift();
   }
