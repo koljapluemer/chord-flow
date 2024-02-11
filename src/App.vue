@@ -60,12 +60,13 @@ const exercise = ref([]);
 function generateChordProgressionPractice() {
   // add one random chord to the end, but keep only the last 3 chords
   // exclude chords already in the exercise, check by frets
-  const randomChord = commonChords.filter(
+  const filteredList = commonChords.filter(
     (chord) => !exercise.value.some((c) => c.frets === chord.frets)
-  )[Math.floor(Math.random() * commonChords.length)];
-  console.log('adding chord', randomChord);
+  );
+  const randomChord =
+    filteredList[Math.floor(Math.random() * filteredList.length)];
   exercise.value.push(randomChord);
-  
+
   if (exercise.value.length > 3) {
     exercise.value.shift();
   }
@@ -74,13 +75,6 @@ function generateChordProgressionPractice() {
     generateChordProgressionPractice();
   }
 }
-
-generateChordProgressionPractice();
-
-// next exercise should picked every 20 seconds
-setInterval(() => {
-  generateChordProgressionPractice();
-}, 20000);
 
 const sessionStarted = ref(false);
 const timeStampOfSessionStart = ref(0);
@@ -92,6 +86,12 @@ if (localStorage.getItem("sessions")) {
 }
 
 function startSession() {
+  generateChordProgressionPractice();
+  // next exercise should picked every 20 seconds
+  setInterval(() => {
+    generateChordProgressionPractice();
+  }, 20000);
+
   sessionStarted.value = true;
   timeStampOfSessionStart.value = Date.now();
 }
@@ -104,6 +104,8 @@ function stopSession() {
   });
   timeStampOfSessionStart.value = 0;
   localStorage.setItem("sessions", JSON.stringify(sessions.value));
+  // kill the interval
+  clearInterval();
 }
 </script>
 
@@ -117,15 +119,19 @@ function stopSession() {
         :class="index === 2 ? 'opacity-20' : ''"
       >
         <h3 class="font-bold">
-        <span v-if="index === 2" class="text-italic text-sm">next:</span>
-        {{ chord.name }}
+          <span v-if="index === 2" class="text-italic text-sm">next:</span>
+          {{ chord.name }}
         </h3>
         <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
       </div>
     </article>
     <article v-else>
       <h2 class="text-xl font-bold">Let's practice some uke chords.</h2>
-      <img src="./assets/uke.jpg" alt="uke" class="w-52 rounded-full m-8 m-auto" />
+      <img
+        src="./assets/uke.jpg"
+        alt="uke"
+        class="w-52 rounded-full m-8 m-auto"
+      />
       <em class="mt-2">
         don't forget the
         <a
