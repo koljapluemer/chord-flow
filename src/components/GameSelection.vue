@@ -6,21 +6,12 @@
       <button class="btn btn-primary" @click="$router.push('/chord-game')">
         Practice Chords
       </button>
-      <button class="btn btn-secondary" @click="$router.push('/chord-game')">
+      <button class="btn btn-secondary" @click="$router.push('/strumming-pattern-game')">
         Practice Strumming Patterns
       </button>
     </div>
 
-    <em class="mt-2">
-      don't forget the
-      <a
-        href="https://www.metronomeonline.com/"
-        class="underline"
-        target="_blank"
-      >
-        metronome</a
-      >.
-    </em>
+
   </article>
 </template>
 
