@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import Metronome from "./components/Metronome.vue";
 
 const songSets = {
   "Common Chords": [
@@ -179,6 +180,9 @@ function stopSession() {
           metronome</a
         >.
       </em>
+
+      <Metronome /> 
+
     </article>
   </main>
 
