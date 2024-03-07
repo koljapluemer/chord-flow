@@ -13,7 +13,32 @@ const easyChords = [
   { name: "C7", frets: "0001" },
 ];
 
-const strummingPatterns = [{ moves: "↓-↓↑-↑↓↑" }];
+const strummingPatterns = [
+  {
+    name: "Island Strum",
+    moves: "↓-↓↑-↑↓↑",
+  },
+  {
+    name: "Simple X",
+    moves: "↓-↑-x-↑-",
+  },
+  {
+    name: "UpDownUpDown Forever",
+    moves: "↓↑↓↑↓↑↓↑",
+  },
+  {
+    name: "Learning Island, Lvl 0",
+    moves: "↓-↓↑↓---",
+  },
+  {
+    name: "Learning Island, Lvl 1",
+    moves: "↓-↓↑↓-↓↑",
+  },
+  {
+    name: "Learning Island, Lvl 2",
+    moves: "↓-↓↑↓↑↓↑",
+  },
+];
 
 const chordsToSwitchBetween = ref([]);
 
@@ -22,7 +47,9 @@ function pickTwoRandomChords() {
   chordsToSwitchBetween.value = randomChords;
 }
 
-const strummingPattern = ref(strummingPatterns[0]);
+const strummingPattern = ref(
+  strummingPatterns[Math.floor(Math.random() * strummingPatterns.length)]
+);
 
 pickTwoRandomChords();
 </script>
@@ -40,7 +67,9 @@ pickTwoRandomChords();
       />
     </div>
 
-    <p>using the strumming pattern:</p>
+    <p>
+      using the strumming pattern: <b>{{ strummingPattern.name }}</b>
+    </p>
     <!-- make a table -->
     <!-- first row 1-2-3-4- -->
     <!-- second row: the pattern -->
