@@ -84,7 +84,6 @@ function generateChordProgressionPractice() {
   const filteredList = songSets[currentSet.value].filter(
     (chord) => !exercise.value.some((c) => c.frets === chord.frets)
   );
-  console.log("filteredList", filteredList);
   const randomChord =
     filteredList[Math.floor(Math.random() * filteredList.length)];
   exercise.value.push(randomChord);

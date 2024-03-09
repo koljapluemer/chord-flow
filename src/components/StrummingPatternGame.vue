@@ -113,6 +113,50 @@ function pickTwoRandomChords() {
   chordsToSwitchBetween.value = randomChords;
 }
 
+function getEasierPattern(currentPattern) {
+  const patternsWithoutCurrent = strummingPatterns.value.filter(
+    (pattern) => pattern.name !== currentPattern.name
+  );
+  // sort patterns by difficulty, lowest first
+  const sortedPatterns = patternsWithoutCurrent.sort(
+    (a, b) => a.difficulty - b.difficulty
+  );
+
+  // get 3 patterns: if possible, easier than current — if there are less than 3 patterns easiert than the current, get the 3 easiest
+  const patternsEasierThanCurrent = patternsWithoutCurrent.filter(
+    (pattern) => pattern.difficulty < currentPattern.difficulty
+  );
+  const patternsToChooseFrom =
+    patternsEasierThanCurrent.length > 0
+      ? patternsEasierThanCurrent
+      : sortedPatterns.slice(0, 3);
+  return patternsToChooseFrom[
+    Math.floor(Math.random() * patternsToChooseFrom.length)
+  ];
+}
+
+function getHarderPattern(currentPattern) {
+  const patternsWithoutCurrent = strummingPatterns.value.filter(
+    (pattern) => pattern.name !== currentPattern.name
+  );
+  // sort patterns by difficulty, highest first
+  const sortedPatterns = patternsWithoutCurrent.sort(
+    (a, b) => b.difficulty - a.difficulty
+  );
+
+  // get 3 patterns: if possible, harder than current — if there are less than 3 patterns harder than the current, get the 3 hardest
+  const patternsHarderThanCurrent = patternsWithoutCurrent.filter(
+    (pattern) => pattern.difficulty > currentPattern.difficulty
+  );
+  const patternsToChooseFrom =
+    patternsHarderThanCurrent.length > 0
+      ? patternsHarderThanCurrent
+      : sortedPatterns.slice(0, 3);
+  return patternsToChooseFrom[
+    Math.floor(Math.random() * patternsToChooseFrom.length)
+  ];
+}
+
 function getNewStrummingPattern(difficulty) {
   // with chance of 35%, get a new chords as well
   if (Math.random() < 0.35) {
@@ -122,18 +166,11 @@ function getNewStrummingPattern(difficulty) {
   strummingPattern.value.difficulty =
     (strummingPattern.value.difficulty + difficulty) / 2;
 
-  // get random pattern, except the one we have
-  let newPattern =
-    strummingPatterns.value[
-      Math.floor(Math.random() * strummingPatterns.value.length)
-    ];
-  while (newPattern.name === strummingPattern.value.name) {
-    newPattern =
-      strummingPatterns.value[
-        Math.floor(Math.random() * strummingPatterns.value.length)
-      ];
-  }
-  strummingPattern.value = newPattern;
+  // get random pattern
+  strummingPattern.value =
+    difficulty > 0
+      ? getHarderPattern(strummingPattern.value)
+      : getEasierPattern(strummingPattern.value);
 
   localStorage.setItem(
     "strummingPatterns",
