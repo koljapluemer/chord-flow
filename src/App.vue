@@ -4,10 +4,14 @@ import { ref, computed } from "vue";
 
 <template>
   <main class="p-2 flex flex-col">
-    <router-view></router-view>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <router-view></router-view>
+      </div>
+    </div>
 
     <em class="mt-2">
-      don't forget the
+      Tip: Keep the beat by tapping your foot or use a
       <a
         href="https://www.metronomeonline.com/"
         class="underline"

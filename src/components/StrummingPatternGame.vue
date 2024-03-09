@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import StopButton from "./StopButton.vue";
 
 const easyChords = [
   { name: "Am", frets: "2000" },
@@ -51,7 +50,6 @@ const chordsToSwitchBetween = ref([]);
 const strummingPattern = ref();
 
 function start() {
-  console.log("mounted");
   const storedStrummingPatterns = JSON.parse(
     localStorage.getItem("strummingPatterns")
   );
@@ -66,7 +64,6 @@ function start() {
     strummingPatterns.value[
       Math.floor(Math.random() * strummingPatterns.value.length)
     ];
-  console.log("strummingPattern", strummingPattern.value);
 
   pickTwoRandomChords();
 }
@@ -77,40 +74,55 @@ function pickTwoRandomChords() {
 }
 
 function getNewStrummingPattern(difficulty) {
+  // with chance of 35%, get a new chords as well
+  if (Math.random() < 0.35) {
+    pickTwoRandomChords();
+  }
   // assuming that if the user wants a harder one, this is easier, and vice-versa
   strummingPattern.value.difficulty =
     (strummingPattern.value.difficulty + difficulty) / 2;
 
-  strummingPattern.value =
+  // get random pattern, except the one we have
+  let newPattern =
     strummingPatterns.value[
       Math.floor(Math.random() * strummingPatterns.value.length)
     ];
-  localStorage.setItem("strummingPatterns", JSON.stringify(strummingPatterns.value));
+  while (newPattern.name === strummingPattern.value.name) {
+    newPattern =
+      strummingPatterns.value[
+        Math.floor(Math.random() * strummingPatterns.value.length)
+      ];
+  }
+  strummingPattern.value = newPattern;
+
+  localStorage.setItem(
+    "strummingPatterns",
+    JSON.stringify(strummingPatterns.value)
+  );
 }
 
 start();
 </script>
 
 <template>
-  <div>
-    <div class="bg-white p-5">
-      <p>Switch between:</p>
+  <h2 class="card-title">Switch between these two chords every 4 beats:</h2>
 
-      <uke-chord
-        :frets="chord.frets"
-        :key="chord.name"
-        v-for="chord in chordsToSwitchBetween"
-        :name="chord.name"
-      />
-    </div>
+  <div class="bg-white">
+    <uke-chord
+      :frets="chord.frets"
+      :key="chord.name"
+      v-for="chord in chordsToSwitchBetween"
+      :name="chord.name"
+      class=""
+    ></uke-chord>
+  </div>
 
-    <p>
-      using the strumming pattern: <b>{{ strummingPattern.name }}</b>
-    </p>
-    <!-- make a table -->
-    <!-- first row 1-2-3-4- -->
-    <!-- second row: the pattern -->
-    <table class="table-auto table text-2xl my-8" :key="strummingPattern.name">
+  <p>using this strumming pattern:</p>
+  <!-- make a table -->
+  <!-- first row 1-2-3-4- -->
+  <!-- second row: the pattern -->
+  <div class="overflow-x-auto max-w-full">
+    <table class="table table-xs font-bold" :key="strummingPattern.name">
       <tr>
         <td>1</td>
         <td>-</td>
@@ -127,23 +139,20 @@ start();
         </td>
       </tr>
     </table>
-
-    <!-- two buttons, one for 'get harder', 'get easier' -->
-    <div class="flex gap-4">
-      <button
-        @click="getNewStrummingPattern(-1)"
-        class="bg-green-500 text-white p-2 rounded"
-      >
-        Get harder pattern
-      </button>
-      <button
-        @click="getNewStrummingPattern(1)"
-        class="bg-red-500 text-white p-2 rounded"
-      >
-        Get easier pattern
-      </button>
-    </div>
   </div>
 
-  <StopButton />
+  <!-- two buttons, one for 'get harder', 'get easier' -->
+  <p>Switch pattern?</p>
+  <div class="card-actions">
+    <button
+      @click="getNewStrummingPattern(-1)"
+      class="btn btn-sm btn-secondary"
+    >
+      go harder
+    </button>
+    <button @click="getNewStrummingPattern(1)" class="btn btn-sm btn-primary">
+      go easier
+    </button>
+    <router-link to="/" class="btn btn-sm">stop session </router-link>
+  </div>
 </template>

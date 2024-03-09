@@ -137,24 +137,23 @@ startSession();
 </script>
 
 <template>
-  <article class="">
-    <p>practicing chords from set: {{ currentSet }}</p>
-    <div class="bg-gray-100 p-2 flex gap-2 flex-wrap">
-      <!-- if third chord, add opacity-45 -->
-      <div
-        v-for="(chord, index) in exercise"
-        :key="index"
-        :class="index === 2 ? 'opacity-20' : ''"
-      >
-        <h3 class="font-bold">
-          <span v-if="index === 2" class="text-italic text-sm">next:</span>
-          {{ chord.name }}
-        </h3>
-        <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
-      </div>
+  <h2 class="card-title">Switch between these two chords every 4 beats:</h2>
+  <div class="bg-gray-100 p-2 flex gap-2 flex-wrap">
+    <!-- if third chord, add opacity-45 -->
+    <div
+      v-for="(chord, index) in exercise"
+      :key="index"
+      :class="index === 2 ? 'opacity-20' : ''"
+    >
+      <h3 class="font-bold">
+        <span v-if="index === 2" class="text-italic text-sm">up next:</span>
+        {{ chord.name }}
+      </h3>
+      <uke-chord :frets="chord.frets" :key="chord.name"></uke-chord>
     </div>
+  </div>
 
-    <!-- stop button -->
+  <div class="card-actions">
     <button
       v-if="sessionStarted"
       @click="stopSession"
@@ -162,5 +161,5 @@ startSession();
     >
       Stop
     </button>
-  </article>
+  </div>
 </template>
