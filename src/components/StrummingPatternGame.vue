@@ -43,6 +43,46 @@ const defaultStrummingPatternData = [
     moves: "↓-↓↑↓↑↓↑",
     difficulty: 0.5,
   },
+  {
+    name: "1",
+    moves: "↓-↓-↓-↓-",
+    difficulty: -0.8,
+  },
+  {
+    name: "2",
+    moves: "↓-↓-↓-↓↑",
+    difficulty: 0,
+  },
+  {
+    name: "5",
+    moves: "↓↑↓-↓↑↓-",
+    difficulty: -0.2,
+  },
+  {
+    name: "6",
+    moves: "↓-↓↑-↑↓-",
+    difficulty: -0.1,
+  },
+  {
+    name: "8",
+    moves: "↓-↓-↑↓↑↓",
+    difficulty: 0.3,
+  },
+  {
+    name: "14",
+    moves: "-↑-↑-↑-↑",
+    difficulty: 0.2,
+  },
+  {
+    name: "15",
+    moves: "-↑-↑-↑↓↑",
+    difficulty: 0.1,
+  },
+  {
+    name: "16",
+    moves: "-↑↓↑-↑↓↑",
+    difficulty: 0.1,
+  },
 ];
 
 const strummingPatterns = ref([]);
