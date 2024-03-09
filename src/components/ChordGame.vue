@@ -111,7 +111,7 @@ function startSession() {
   // next exercise should picked every 20 seconds
   setInterval(() => {
     generateChordProgressionPractice();
-  }, 20000);
+  }, 3000);
 
   sessionStarted.value = true;
   timeStampOfSessionStart.value = Date.now();
@@ -156,9 +156,9 @@ startSession();
     <button
       v-if="sessionStarted"
       @click="stopSession"
-      class="btn btn-primary fixed z-90 bottom-10 right-8 drop-shadow-xl hover:drop-shadow-2xl duration-300"
+      class="btn btn-sm"
     >
-      Stop
+      stop session
     </button>
   </div>
 </template>
