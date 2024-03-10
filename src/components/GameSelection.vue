@@ -13,6 +13,13 @@
     >
       Strumming Patterns
     </button>
+    <!-- Finger Picking -->
+    <button
+      class="btn btn-secondary"
+      @click="$router.push('/finger-picking-game')"
+    >
+      Finger Picking
+    </button>
   </div>
 </template>
 
