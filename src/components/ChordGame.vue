@@ -111,7 +111,7 @@ function startSession() {
   // next exercise should picked every 20 seconds
   setInterval(() => {
     generateChordProgressionPractice();
-  }, 3000);
+  }, 18000);
 
   sessionStarted.value = true;
   timeStampOfSessionStart.value = Date.now();
