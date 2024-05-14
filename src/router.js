@@ -25,6 +25,12 @@ const routes = [
         name: 'FingerPickingGame',
         component: () => import('./components/FingerPickingGame.vue')
     },
+    // SnippetGame
+    {
+        path: '/snippet-game',
+        name: 'SnippetGame',
+        component: () => import('./components/SnippetGame.vue')
+    },
 ]
 
 const router = createRouter({

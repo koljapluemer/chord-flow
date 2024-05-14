@@ -20,6 +20,10 @@
     >
       Finger Picking
     </button>
+    <!-- Snippet Game -->
+    <button class="btn btn-secondary" @click="$router.push('/snippet-game')">
+      Snippets
+    </button>
   </div>
 </template>
 
