@@ -1,3 +1,6 @@
+demo_snippets/
+demo_snippets/*
+
 # Logs
 logs
 *.log
